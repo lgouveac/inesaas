@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestor de Investimentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-graph-up-arrow me-2"></i>
+                <span>Gestor de Investimentos</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ativos.html">Ativos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analise.html">Análise</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1 class="mb-0">Dashboard</h1>
+                <p class="text-muted">Visão geral da sua carteira de investimentos</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <button id="refreshDataBtn" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Atualizar Dados
+                </button>
+                <a href="importar.html" class="btn btn-primary ms-2">
+                    <i class="bi bi-plus-lg me-2"></i>Adicionar
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-subtitle text-muted">Patrimônio Total</h6>
+                            <i class="bi bi-wallet2 text-primary fs-4"></i>
+                        </div>
+                        <h3 class="card-title mb-1" id="totalPatrimonio">R$ 0,00</h3>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-success me-2" id="patrimonioVariacao">+0,00%</span>
+                            <small class="text-muted">desde ontem</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-subtitle text-muted">Rentabilidade</h6>
+                            <i class="bi bi-graph-up-arrow text-primary fs-4"></i>
+                        </div>
+                        <h3 class="card-title mb-1" id="rentabilidadeTotal">+0,00%</h3>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted">nos últimos 30 dias</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-subtitle text-muted">Total de Ativos</h6>
+                            <i class="bi bi-collection text-primary fs-4"></i>
+                        </div>
+                        <h3 class="card-title mb-1" id="totalAtivos">0</h3>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted">em <span id="totalCategorias">0</span> categorias</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-subtitle text-muted">Vs. Benchmark</h6>
+                            <i class="bi bi-trophy text-primary fs-4"></i>
+                        </div>
+                        <h3 class="card-title mb-1" id="vsBenchmark">+0,00%</h3>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted">vs. <span id="benchmarkAtual">IBOV</span> no ano</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Distribuição da Carteira</h5>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary active" data-chart-view="categorias">Categorias</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-chart-view="ativos">Ativos</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="chart-container">
+                                    <canvas id="portfolioDistributionChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="table-responsive" style="max-height: 300px;">
+                                    <table class="table table-sm" id="distributionTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Categoria</th>
+                                                <th>Valor</th>
+                                                <th>%</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dados serão inseridos via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Melhores Desempenhos</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush" id="topPerformers">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Evolução do Patrimônio</h5>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary active" data-period="1m">1M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-period="3m">3M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-period="6m">6M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-period="1y">1A</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-period="all">Tudo</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="portfolioEvolutionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Piores Desempenhos</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush" id="worstPerformers">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Alocação Atual vs. Ideal</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="allocationComparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Comparação com Benchmarks</h5>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary active" data-benchmark-period="1m">1M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-benchmark-period="3m">3M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-benchmark-period="6m">6M</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-benchmark-period="1y">1A</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="benchmarkComparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-4 bg-light">
+        <div class="container text-center">
+            <p class="mb-0">Gestor de Investimentos &copy; 2025</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Investimentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-graph-up-arrow me-2"></i>
+                <span>Gestor de Investimentos</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ativos.html">Ativos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analise.html">Análise</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-4">Gerencie seus investimentos com simplicidade</h1>
+                <p class="lead mb-5">Acompanhe, analise e otimize sua carteira de investimentos com uma interface intuitiva e elegante.</p>
+            </div>
+        </div>
+
+        <div class="row mt-4 g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-upload"></i>
+                        </div>
+                        <h3 class="card-title h5">Importar Dados</h3>
+                        <p class="card-text">Importe seus investimentos via CSV ou XLS com suporte a múltiplas abas.</p>
+                        <a href="importar.html" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                        <h3 class="card-title h5">Adicionar Manualmente</h3>
+                        <p class="card-text">Adicione e edite seus ativos manualmente de forma rápida e simples.</p>
+                        <a href="ativos.html" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-bar-chart"></i>
+                        </div>
+                        <h3 class="card-title h5">Análise de Desempenho</h3>
+                        <p class="card-text">Compare sua carteira com benchmarks como CDI, IBOV, IFIX e NASDAQ.</p>
+                        <a href="analise.html" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-gear"></i>
+                        </div>
+                        <h3 class="card-title h5">Simulação de Cenários</h3>
+                        <p class="card-text">Simule diferentes cenários econômicos e veja o impacto em seus investimentos.</p>
+                        <a href="cenarios.html" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="card-title h4 mb-4">Comece agora mesmo</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex mb-4">
+                                    <div class="me-3">
+                                        <div class="step-circle">1</div>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 mb-2">Importe seus dados</h3>
+                                        <p class="mb-0">Faça upload de arquivos CSV ou XLS da sua corretora ou adicione seus ativos manualmente.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <div class="me-3">
+                                        <div class="step-circle">2</div>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 mb-2">Visualize sua carteira</h3>
+                                        <p class="mb-0">Veja a distribuição dos seus investimentos e acompanhe o desempenho em tempo real.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-4">
+                                    <div class="me-3">
+                                        <div class="step-circle">3</div>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 mb-2">Compare com benchmarks</h3>
+                                        <p class="mb-0">Analise o desempenho da sua carteira em relação aos principais índices do mercado.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <div class="step-circle">4</div>
+                                    </div>
+                                    <div>
+                                        <h3 class="h6 mb-2">Simule cenários</h3>
+                                        <p class="mb-0">Teste diferentes cenários econômicos e veja como sua carteira pode ser afetada.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="importar.html" class="btn btn-primary px-4 py-2">Começar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-4 bg-light">
+        <div class="container text-center">
+            <p class="mb-0">Gestor de Investimentos &copy; 2025</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

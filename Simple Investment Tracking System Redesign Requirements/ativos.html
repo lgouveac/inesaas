@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ativos - Gestor de Investimentos</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="bg-white shadow-sm mb-4">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light py-3">
+                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <i class="bi bi-graph-up-arrow text-primary me-2 fs-3"></i>
+                    <span class="fw-bold">Gestor de Investimentos</span>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.html">
+                                <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="importar.html">
+                                <i class="bi bi-upload me-1"></i> Importar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="ativos.html">
+                                <i class="bi bi-list-ul me-1"></i> Ativos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="analise.html">
+                                <i class="bi bi-bar-chart me-1"></i> Análise
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Conteúdo Principal -->
+    <main class="container mb-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0">Gerenciar Ativos</h1>
+                    <div>
+                        <span class="text-muted small me-3">
+                            <i class="bi bi-clock me-1"></i>
+                            Última atualização: <span class="last-update-time">--/--/---- --:--</span>
+                        </span>
+                        <button id="updatePricesBtn" class="btn btn-sm btn-outline-primary">
+                            <div id="updateSpinner" class="spinner-border spinner-border-sm me-1 d-none" role="status">
+                                <span class="visually-hidden">Atualizando...</span>
+                            </div>
+                            <i class="bi bi-arrow-repeat me-1"></i> Atualizar Preços
+                        </button>
+                        <button id="clearPortfolioBtn" class="btn btn-sm btn-outline-danger ms-2">
+                            <i class="bi bi-trash me-1"></i> Limpar Carteira
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="alertContainer"></div>
+                
+                <!-- Filtros -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="searchInput" class="form-label">Pesquisar</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar por código, nome ou corretora...">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="categoryFilter" class="form-label">Categoria</label>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="all" selected>Todas as categorias</option>
+                                    <option value="acoes_br">Ações Brasil</option>
+                                    <option value="acoes_eua">Ações EUA</option>
+                                    <option value="fii">Fundos Imobiliários</option>
+                                    <option value="rf_pre">Renda Fixa Pré</option>
+                                    <option value="rf_pos">Renda Fixa Pós</option>
+                                    <option value="rf_ipca">Renda Fixa IPCA+</option>
+                                    <option value="cripto">Criptomoedas</option>
+                                    <option value="outros">Outros</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <a href="importar.html" class="btn btn-primary w-100">
+                                    <i class="bi bi-plus-circle me-1"></i> Adicionar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabela de Ativos -->
+                <div class="card shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="code">
+                                                Código <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="name">
+                                                Nome <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="quantity">
+                                                Quantidade <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="price">
+                                                Preço <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="value">
+                                                Valor <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link text-dark p-0 text-decoration-none" data-sort="broker">
+                                                Corretora <i class="bi bi-arrow-down-up text-muted ms-1"></i>
+                                            </button>
+                                        </th>
+                                        <th class="text-end">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assetsTableBody">
+                                    <!-- Preenchido via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted small" id="assetCount">0 ativos</span>
+                            <div>
+                                <a href="importar.html" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-upload me-1"></i> Importar Mais
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal de Edição -->
+    <div class="modal fade" id="editAssetModal" tabindex="-1" aria-labelledby="editAssetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAssetModalLabel">Editar Ativo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editCode" class="form-label">Código <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="editCode">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="editName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editQuantity" class="form-label">Quantidade <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="editQuantity" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPrice" class="form-label">Preço <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            <input type="number" class="form-control" id="editPrice" step="0.01">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBroker" class="form-label">Corretora</label>
+                        <input type="text" class="form-control" id="editBroker">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveEditBtn">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Exclusão -->
+    <div class="modal fade" id="deleteAssetModal" tabindex="-1" aria-labelledby="deleteAssetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAssetModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+                    </div>
+                    <p>Tem certeza que deseja excluir o ativo <strong id="deleteAssetInfo"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="bi bi-trash me-1"></i> Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmação de Limpeza -->
+    <div class="modal fade" id="clearPortfolioModal" tabindex="-1" aria-labelledby="clearPortfolioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clearPortfolioModalLabel">Confirmar Limpeza</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Atenção!</strong> Esta ação irá remover todos os ativos da sua carteira.
+                    </div>
+                    <p>Tem certeza que deseja limpar completamente sua carteira de investimentos?</p>
+                    <p>Esta ação não pode ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmClearBtn">
+                        <i class="bi bi-trash me-1"></i> Limpar Carteira
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rodapé -->
+    <footer class="bg-light py-4 mt-auto">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted">© 2025 Gestor de Investimentos</span>
+                </div>
+                <div>
+                    <a href="#" class="text-muted text-decoration-none me-3">Termos</a>
+                    <a href="#" class="text-muted text-decoration-none">Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts Personalizados -->
+    <script src="js/main.js"></script>
+    <script src="js/yahoo-finance.js"></script>
+    <script src="js/assets.js"></script>
+</body>
+</html>
